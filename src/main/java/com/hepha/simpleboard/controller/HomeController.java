@@ -18,7 +18,7 @@ public class HomeController {
     @RequestMapping(value="/home", method=RequestMethod.GET)
     public ModelAndView goHome(HttpServletRequest request){
 
-        logger.debug("goHome==============================================");
+        logger.debug("goHome==============================================1");
         ModelAndView model = new ModelAndView();
 
         model.addObject("home_title", home_title);
