@@ -26,7 +26,7 @@ public class HomeController {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    @Qualifier("namedParameterJdbcBookRepository")
+    @Qualifier("namedParameterJdbcBookRepository")    
     private BookRepository bookRepository;
 
     private final Logger logger = LogManager.getLogger(HomeController.class);
@@ -46,13 +46,18 @@ public class HomeController {
         //JDBC
         List<Book> books;
         books = Arrays.asList(
-            new Book("2", "bbbb"), 
-            new Book("3", "cccc")
+            new Book("2", "bbbb_", "title_bbbb"), 
+            new Book("3", "cccc_", "title_cccc")
         );
+
+
 
         books.forEach(book -> {
             logger.debug(book.getId() + ":" + book.getName());
             bookRepository.save(book);
+            //bookRepository.update(book);
+            
+
         });
         
 
