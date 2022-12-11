@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'groovy'
 }
 
 group = 'com.hepha'
@@ -13,13 +14,13 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')	//Thymeleaf 뷰템플릿
+	implementation('org.springframework.boot:spring-boot-starter-log4j2')
+	implementation('org.springframework.boot:spring-boot-starter-jdbc')
+	implementation('org.codehaus.groovy:groovy')								//2022.12.09 groovy 추가 
 
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-
-	compileOnly 'org.projectlombok:lombok'
+	compileOnly('org.projectlombok:lombok')
 	annotationProcessor 'org.projectlombok:lombok'
 
 	runtimeOnly 'com.h2database:h2'
