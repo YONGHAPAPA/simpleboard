@@ -1,13 +1,19 @@
 package com.hepha.simpleboard.repository;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.hepha.simpleboard.Book;
+import com.hepha.simpleboard.model.Book;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 @Repository
 public class jdbcBookRepository implements BookRepository {
+
+    private final Logger log = LogManager.getLogger(jdbcBookRepository.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -25,7 +31,10 @@ public class jdbcBookRepository implements BookRepository {
 
     @Override
     public int update(Book book) {
-        return jdbcTemplate.update("update book set title = ? where id = ?", book.getName(), book.getId());
+
+        log.debug("jdbcBookRepository ====================> ");
+        String sql = "update Bookss set title = ? where id = ?";
+        return jdbcTemplate.update(sql, book.getName(), book.getId());
     }
    
 }

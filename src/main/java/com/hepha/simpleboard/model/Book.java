@@ -1,4 +1,4 @@
-package com.hepha.simpleboard;
+package com.hepha.simpleboard.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
