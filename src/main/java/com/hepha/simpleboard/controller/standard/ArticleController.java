@@ -18,7 +18,7 @@ public class ArticleController {
     
     @GetMapping("/standard/articleList")
     public ModelAndView getArticleList() {
-        log.debug("getArticleList >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        log.debug("getArticleList >>>>>>>>>>>>>>>>>>>>>>>>>>>>..");
 
         ModelAndView model = new ModelAndView();
         model.setViewName("standard/articlelist");

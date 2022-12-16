@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hepha.simpleboard.model.Article;
@@ -24,7 +25,8 @@ import com.hepha.simpleboard.service.ArticleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Controller
+@RestController
+//@Controller
 public class HomeController {
 
     @Autowired
@@ -44,6 +46,14 @@ public class HomeController {
 
     String home_title = "simple board";
 
+
+    @GetMapping("hello")
+    public List<String> hello(){
+
+        logger.debug("hello....2");
+        return Arrays.asList("hi", "hello");
+    }
+
     @GetMapping("/home/articlelist")
     public ModelAndView articleList(){
         logger.debug("Standard :: Article List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -55,6 +65,7 @@ public class HomeController {
 
         return model;      
     }
+
 
     @RequestMapping(value="/home", method=RequestMethod.GET)
     public ModelAndView goHome(HttpServletRequest request){
