@@ -51,7 +51,7 @@ public class HomeController {
     public List<String> hello(){
 
         logger.debug("hello....2");
-        return Arrays.asList("hi", "hello");
+        return Arrays.asList("hi1", "hello1");
     }
 
     @GetMapping("/home/articlelist")
