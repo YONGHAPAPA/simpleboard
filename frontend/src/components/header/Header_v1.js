@@ -1,6 +1,6 @@
 import React from "react";
 
-class Header extends React.Component {
+class Header_v1 extends React.Component {
 
     render(){
         return(
@@ -21,13 +21,13 @@ class Header extends React.Component {
 
                     </div>
                 </nav>
-                <div class="px-3 py-0 border-bottom mb-0"></div>
+                <div className="px-3 py-0 border-bottom mb-0"></div>
             </div>
         );
     }
 }
 
-export default Header;
+export default Header_v1;
 
 
 
