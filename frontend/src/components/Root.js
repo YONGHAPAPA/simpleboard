@@ -3,7 +3,6 @@ import Header from './Header';
 import BoardBody from './BoardBody';
 import BoardSideNav from './BoardSideNav';
 import BoardPostList from './BoardPostList';
-import Layout from './Layout';
 
 
 import { Outlet, Router, RouterProvider, createRoutesFromElements, createBrowserRouter, Route, Routes, BrowserRouter } from 'react-router-dom';

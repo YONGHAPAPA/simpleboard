@@ -36,7 +36,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout/>} >
-          <Route index element={<Body/>} />
+          <Route index element={<BoardBody/>} />
           <Route path="2" element={<Body2/>} />
         </Route>
       </Routes>
@@ -49,29 +49,22 @@ function App() {
 function Layout(){
 
   return(
-    <div>
-      <Head/>
-      <Outlet/>
-      <Footer/>
+    <div className='flex-area'>
+      <div className='top-start'> 
+        <Header/>
+        <Outlet/>
+      </div>
+
+      <div className='bottom-start'>
+        {/* <Footer/> */}
+      </div>      
     </div>
+    
   );
 }
 
-function Head(){
-  return(
-    <>
-      <Header/>
-    </>
-  );
-}
 
-function Body(){
-  return(
-    <>
-      <BoardBody/>
-    </>
-  )
-}
+
 
 function Body2(){
   return(

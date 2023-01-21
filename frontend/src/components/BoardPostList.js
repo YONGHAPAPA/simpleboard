@@ -4,8 +4,10 @@ function BoardPostList(){
 
     return(
         <>
-            <div className='main-body'>
+            <div className='body-right'>
                 PostList
+                dfdfddddd d fdf djfldjfdljfdlkjfldjdjldjfdlfjdlkjfdlkjflkdjflkdjfldjflkdjldfj
+                fdfd
             </div>
         </>
     );
