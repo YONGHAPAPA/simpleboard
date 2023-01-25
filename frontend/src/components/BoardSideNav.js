@@ -6,9 +6,10 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import {IconContext} from 'react-icons/lib'
+import { IconContext } from 'react-icons/lib'
 import { SidebarData } from './SiderbarData';
 import SubMenu from './SubMenu'
+import { RiContactsBookLine } from 'react-icons/ri';
 
 
 const Nav = styled.div`
@@ -31,7 +32,7 @@ const NavIcon = styled(Link)`
 
 const SidebarNav = styled.nav`
     background: gray;
-    width: 250px;
+    width: 190px;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -62,9 +63,9 @@ const SideBar = () => {
 
             <SidebarNav sidebar={sidebar}>
                 <SidebarWrap>
-                    <NavIcon to='#'>
+                    {/* <NavIcon to='#'>
                         <AiIcons.AiOutlineClose onClick={showSidebar} />
-                    </NavIcon>
+                    </NavIcon> */}
 
                     {SidebarData.map((item, index) => {
                         return <SubMenu item={item} key={index} />;
@@ -79,10 +80,38 @@ const SideBar = () => {
 }
 
 
+// function getBoardInfo(){
+
+
+//     return "";
+// }
+
+
+function getAllBoard(){
+
+    fetch("board/getBoardList").then(res=>{
+
+        console.log("getAllBoard")
+        console.log(res.json());
+
+    }).catch(err=>{
+
+        console.log("ERR !!!! ")
+        console.log(err);
+    })
+
+}
+
+
 class BoardSideNav extends React.Component {
+
+    
 
 
     render(){
+
+        let boardInfo = getAllBoard();
+
         return(
                 
             <div className='sidebar' >

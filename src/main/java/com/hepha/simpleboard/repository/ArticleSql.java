@@ -9,6 +9,11 @@ public class ArticleSql {
     "SELECT ID, TITLE, CONTENT, ARTICLE_TYPE, DELETE_FLG, CRE_ID, CRE_DT, UPD_ID, UPD_DT " + 
     "FROM ARTICLE LIMIT 3";
 
+
+    public static final String SELECT_BOARD = 
+    "SELECT ID, BOARD_NAME, BOARD_TYPE, IFNULL(PARENT_BOARD, 1) AS PARENT_BOARD, DESCRIPTION, CRE_ID, CRE_DT, UPD_ID, UPD_DT " + 
+    "FROM BOARD LIMIT 3";
+
     /*
      * 
      */

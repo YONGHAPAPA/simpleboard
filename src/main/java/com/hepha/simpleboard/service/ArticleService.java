@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.hepha.simpleboard.model.Article;
 import com.hepha.simpleboard.repository.ArticleRepository;
-
 import lombok.extern.log4j.Log4j;
 
 
@@ -22,6 +21,7 @@ public class ArticleService {
     }
 
 
+    @Autowired
     public List<Article> getArticleList(){
         return this.articleRepository.findAll();
     }

@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+//사이드메뉴 top
 const SidebarLink = styled(Link)`
   display: flex;
   color: #e1e9fc;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
   list-style: none;
   height: 60px;
   text-decoration: none;
@@ -21,13 +22,14 @@ const SidebarLink = styled(Link)`
 `;
 
 const SidebarLabel = styled.span`
-  margin-left: 16px;
+  margin-left: 13px;
 `;
 
+//서브메뉴 1
 const DropdownLink = styled(Link)`
   background: #414757;
   height: 60px;
-  padding-left: 3rem;
+  padding-left: 2rem;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -60,6 +62,8 @@ const SubMenu = ({ item }) => {
             : null}
         </div>
       </SidebarLink>
+
+      {/* 서브메뉴 */}
       {subnav &&
         item.subNav.map((item, index) => {
           return (

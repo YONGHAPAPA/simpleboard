@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 //@RequiredArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @ToString
 @AllArgsConstructor
 public class Article {
