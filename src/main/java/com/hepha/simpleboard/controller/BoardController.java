@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -49,13 +51,14 @@ public class BoardController {
     private BoardService brdSvc;
 
 
-    private final Logger logger = LogManager.getLogger(HomeController.class);
+    private final Logger logger = LogManager.getLogger(BoardController.class);
 
     String home_title = "simple board";
 
 
-    //Min 20230125
-    @RequestMapping(value="/board/getBoardList", method=RequestMethod.GET)
+    
+    //@ResponseStatus(code=HttpStatus.NOT_FOUND, reason="Data Not Found") //강제 Exception 발생 처리 
+    @RequestMapping(value="board/getBoardList", method=RequestMethod.GET)
     //@GetMapping("/board/getBoardList")
     @ResponseBody
     public Object getBoardList(){
@@ -72,7 +75,12 @@ public class BoardController {
             logger.debug(brd.getBoardName());
         }
 
+
+        
+
         return result;
+
+        
     }
 
 
