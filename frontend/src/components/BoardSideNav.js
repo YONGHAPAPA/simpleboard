@@ -68,20 +68,15 @@ const Spinner = styled(ImIcons.ImSpinner2)`
 `;
 
 
-
-
 async function GetAllBoard(){
 
     let boardInfo;
 
     try{
-        
-         console.log("getBoardData 1");
-
+        console.log("getBoardData 1");
         boardInfo = await getBoardData();
-
-         console.log(boardInfo);
-         console.log("getBoardData 2");
+        console.log(boardInfo);
+        console.log("getBoardData 2");
     }catch(err){
 
     }
@@ -91,10 +86,14 @@ async function GetAllBoard(){
 
 
 
-function SideBar() {
+function SideBar(props) {
+
+    let boardData = props.sourceData;
+
+    console.log(boardData);
 
     //const [sidebar, setSidebar] = useState(false);
-    const [loadComplete, setLoadComplete] = useState(false);
+    const [loadComplete, setLoadComplete] = useState(true);
 
     const [attribues, setAttribues] = useState({
         sidebar: false, 
@@ -118,8 +117,6 @@ function SideBar() {
     }, []);
 
     //const allBoardData = useDeferredValue(attribues.boardData);
-    
-
     //const showSidebar = () => setSidebar(!sidebar);
     //const changeHandler = ()=> setAttribues({...attribues, "sidebar": !attribues.sidebar});
 
@@ -127,26 +124,17 @@ function SideBar() {
     //console.log(`boardInfo ${boardInfo}`);
     //GetAllBoard();
 
-    GetAllBoard().then((res)=>{
-        console.log("complete....")
+    // GetAllBoard().then((res)=>{
+    //     console.log("complete....")
 
-        console.log(`loadComplete : ${loadComplete}`)
-        setLoadComplete(true);
-        //setAttribues({...attribues, "dataLoadComplete": true})
-    });
+    //     console.log(`loadComplete : ${loadComplete}`)
+    //     setLoadComplete(true);
+    //     //setAttribues({...attribues, "dataLoadComplete": true})
+    // });
 
-    // GetAllBoard().then((data)=>{
+    
 
-    //     //console.log(`SideBar : ${data}`)
-    //     //setAttribues({...attribues, "boardData":SidebarData});
-    // })
-
-    //setTimeout(GetAllBoard, 2000);
-
-
-    //console.log(`SideBar :: ${boardInfo}`);
-
-    //console.log(attribues.boardData);
+    
 
     return (
         <>
@@ -232,12 +220,17 @@ function getBoardData(){
 
 class BoardSideNav extends React.Component {
 
-    render(){
+    constructor(props){
+        super(props);
+        this.state = {
+            boardData: props.boardData
+        }
+    }
 
+    render(){
         return(
-                
             <div className='sidebar' >
-                <SideBar/>
+                <SideBar sourceData={this.state.boardData}/>
             </div>
         );
     }
