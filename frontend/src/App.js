@@ -3,16 +3,8 @@ import './App.css';
 import {Fragment, useEffect, useState, useCallback} from 'react'
 import {BrowserRouter, createBrowserRouter, createRoutesFromElements, Form, Outlet, Route, RouterProvider, Routes} from 'react-router-dom'
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Header from "./components/Header";
 import BoardBody from "./components/BoardBody";
-import Footer from "./components/Footer"
-import Sidebar from './components/BoardSideNav'
-import Content from './components/BoardPostList';
-import { ImSleepy } from 'react-icons/im';
-
 
 
 function App() {
@@ -45,7 +37,7 @@ function App() {
   let router = createBrowserRouter(createRoutesFromElements(
     <Route path='/' element={ <Layout/> } >
        <Route index loader={ boardLoader } element={ <BoardBody/> } />
-       <Route path="2" element={ <Body2/> } />
+       {/* <Route path="2" element={ <Body2/> } /> */}
     </Route>
   ));
 
@@ -121,14 +113,6 @@ function Layout(){
 
 
 
-
-function Body2(){
-  return(
-    <>
-      Body2
-    </>
-  )
-}
 
 
 export default App;
