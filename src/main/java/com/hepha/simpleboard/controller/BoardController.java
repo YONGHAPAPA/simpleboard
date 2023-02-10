@@ -58,7 +58,7 @@ public class BoardController {
 
     
     //@ResponseStatus(code=HttpStatus.NOT_FOUND, reason="Data Not Found") //강제 Exception 발생 처리 
-    @RequestMapping(value="board/getBoardList", method=RequestMethod.GET)
+    @RequestMapping(value="board/getAllBoardList", method=RequestMethod.GET)
     //@GetMapping("/board/getBoardList")
     @ResponseBody
     public Object getBoardList(){

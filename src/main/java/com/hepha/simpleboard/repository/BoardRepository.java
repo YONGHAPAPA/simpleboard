@@ -3,7 +3,6 @@ package com.hepha.simpleboard.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.hepha.simpleboard.model.Article;
 import com.hepha.simpleboard.model.Board;
 
 public interface BoardRepository {

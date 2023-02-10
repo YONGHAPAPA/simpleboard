@@ -42,7 +42,7 @@ const DropdownLink = styled(Link)`
   }
 `;
 
-const SubMenu = ({ item }) => {
+const SubMenu = ({item} : {item:any}) => {
   const [subnav, setSubnav] = useState(false);
 
   const showSubnav = () => setSubnav(!subnav);
@@ -65,7 +65,7 @@ const SubMenu = ({ item }) => {
 
       {/* 서브메뉴 */}
       {subnav &&
-        item.subNav.map((item, index) => {
+        item.subNav.map((item:any, index:any) => {
           return (
             <DropdownLink to={item.path} key={index}>
               {item.icon}

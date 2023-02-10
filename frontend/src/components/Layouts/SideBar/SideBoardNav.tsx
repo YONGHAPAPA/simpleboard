@@ -3,7 +3,7 @@ import { useState, useDeferredValue } from 'react'
 import { Outlet } from 'react-router-dom';
 //import PostList from './BoardPostList';
 import styled, { keyframes } from 'styled-components';
-import { Link } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons/lib'
@@ -14,9 +14,10 @@ import * as ImIcons from 'react-icons/im';
 
 
 import { SidebarData } from '../../SiderbarData';
-import SubMenu from '../../SubMenu';
+
 import SideBoardNavItem from './SideBoardNavItem';
 import { RiContactsBookLine } from 'react-icons/ri';
+import type { IBoardNavItem } from 'src/components/Models/boards';
 
 
 const Nav = styled.div`
@@ -61,11 +62,9 @@ const spinnerRotate = keyframes`
 `
 
 const Spinner = styled(ImIcons.ImSpinner2)`
-
     color:teal;
     font-size: 0.7rem;
     animation: ${spinnerRotate} 3s infinite;
-    
 `;
 
 
@@ -87,10 +86,10 @@ async function GetAllBoard(){
 
 
 
-function SideBar(props) {
+function SideBar(props:any) {
 
-    let sourceData = props.sourceData;
-    console.log(sourceData);
+    let boardNavData = props.boardNavData;
+    //console.log(boardNavData);
 
     //const [sidebar, setSidebar] = useState(false);
     const [loadComplete, setLoadComplete] = useState(true);
@@ -148,7 +147,8 @@ function SideBar(props) {
 
             
 
-            <SidebarNav sidebar={attribues.sidebar}>
+            {/* <SidebarNav sidebar={attribues.sidebar}> */}
+            <SidebarNav>
                 <SidebarWrap>
                     {/* <NavIcon to='#'>
                         <AiIcons.AiOutlineClose onClick={changeHandler} />
@@ -219,27 +219,16 @@ function getBoardData(){
 
 
 async function fetchBoardData(){
-    console.log("fetchBoardData");
-
-
+    //console.log("fetchBoardData");
     let sleep = new Promise((resolve)=>{
-        
         setTimeout(()=>resolve("aaa"), 3000);
     });
 
-
     sleep.then((res)=>{
-        console.log(res);
+        //console.log(res);
     })
 
-
-
-    console.log("after fetchBoardData")
-
-
-
-
-
+    //console.log("after fetchBoardData")
     return "";
 } 
 
@@ -247,32 +236,87 @@ async function fetchBoardData(){
 
 
 
+export async function loader({params} : {params:any}){
 
-
-class SideBoardNav extends React.Component {
-
-    constructor(props){
-        super(props);
-        this.state = {
-            //boardData: props.boardData
-            sourceData: "",
-            sample: "",
-        }
-    }
-
-    componentDidMount(){
-
-        fetchBoardData()
-    }
-    
-
-    render(){
-        return(
-            <div className='sidebar' >
-                <SideBar sourceData={this.state.boardData}/>
-            </div>
-        );
-    }
+    console.log("loader start !!!");
 }
 
-export default SideBoardNav;
+
+export default function SideBoardNav(boardNavItems: Array<IBoardNavItem>){
+
+    //console.log(boardNavItems);
+    //const boardSourceData = useLoaderData();
+
+    // boardNavItems.map((item)=>{
+    //     console.log(item.id  + "::" + item.boardName)
+    // })
+
+    // boardNavItems.forEach((item)=>{
+    //     console.log(item.id + "::" + item.boardName);
+    // })
+
+
+    //boardNavItems 는 유사배열(Array-like object) 이므로 forEach(), map() 등 함수를 바로 사용할수 없음
+    //참조 : stackdiary.com/guides/typeerror-foreach-is-not-a-function/
+    
+    //console.log(Array.isArray(boardNavItems));
+    const arr = Array.from(boardNavItems);
+    //const arr = Object.keys(boardNavItems);
+
+    console.log(arr);
+
+
+    // Array.from(boardNavItems).forEach((item)=>{
+    //     console.log(item.id.toString() + item.boardName);
+    // })
+
+    arr.forEach(item=>{
+        //console.log(item)
+        
+    })
+
+
+
+    
+
+    
+
+    return(
+        <div className='sidebar' >
+            {/* <SideBar boardNavData={this.state.boardNavData}/> */}
+            <SideBar />
+        </div>
+    );
+
+}
+
+
+
+// class SideBoardNav extends React.Component {
+
+//     constructor(props: any){
+//         super(props);
+//         this.state = {
+//             boardNavData: props.boardNavData,
+//             sample: "",
+//         }
+//     }
+
+//     componentDidMount(){
+//         fetchBoardData()
+//     }
+    
+
+//     render(){
+
+
+//         return(
+//             <div className='sidebar' >
+//                 {/* <SideBar boardNavData={this.state.boardNavData}/> */}
+//                 <SideBar />
+//             </div>
+//         );
+//     }
+// }
+
+// export default SideBoardNav;

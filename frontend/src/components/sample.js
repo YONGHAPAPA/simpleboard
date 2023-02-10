@@ -2,7 +2,7 @@
 
 export function sleep(interval){
 
-    let isSuccess = false;
+    let isSuccess = true;
 
     let promise = new Promise((resolve, reject)=>{
         if(isSuccess){
@@ -12,13 +12,13 @@ export function sleep(interval){
         }
     });
 
+    // promise.then((data)=>{
+    //     console.log(data);
+    // }).catch((err)=>{
+    //     console.log(err);
+    // })
 
-    promise.then((data)=>{
-        console.log(data);
-    }).catch((err)=>{
-        console.log(err);
-    })
-
+    return promise;
 }
 
 

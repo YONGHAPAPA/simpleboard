@@ -4,7 +4,7 @@ import {Fragment, useEffect, useState, useCallback} from 'react'
 import {BrowserRouter, createBrowserRouter, createRoutesFromElements, Form, Outlet, Route, RouterProvider, Routes} from 'react-router-dom'
 
 import Header from "./components/Header";
-import BoardBody from "./components/BoardBody";
+//import BoardBody from "./components/BoardBody";
 
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
 
   let router = createBrowserRouter(createRoutesFromElements(
     <Route path='/' element={ <Layout/> } >
-       <Route index loader={ boardLoader } element={ <BoardBody/> } />
+       {/* <Route index loader={ boardLoader } element={ <BoardBody/> } /> */}
        {/* <Route path="2" element={ <Body2/> } /> */}
     </Route>
   ));
