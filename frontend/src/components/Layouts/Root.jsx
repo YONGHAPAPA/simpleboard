@@ -15,13 +15,14 @@ import { getAllBoardList } from '../Models/boards'
 
 async function boardLoader(){
     //console.log("boardLoader start!")
-    
     //const inter = await sleep(2000, "boardLoader", true);
     //console.log("sleep complete....");
 
     let boardSetData = new Array().fill(null);
     const boardListData = await getAllBoardList();
+    
     //console.log(`boardListData : ${boardListData}`);
+    //console.log(boardListData.length);
 
     return boardListData;
 }

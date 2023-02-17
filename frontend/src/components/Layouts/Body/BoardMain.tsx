@@ -1,15 +1,8 @@
 import * as React from 'react'
 import {Form, Router, createBrowserRouter, Route, RouterProvider, createRoutesFromElements} from 'react-router-dom';
 import SideBoardNav from '../SideBar/SideBoardNav';
-import BoardPostList from './BoardPostList';
 import { useLoaderData, Outlet } from 'react-router-dom';
-import { doFetchJSON } from '../../../utils/utilFetch';
-
-import type { IBoard, IBoardNavItem } from '../../Models/boards'
-import { initBoardList } from '../../Models/boards';
-import { useEffect } from 'react';
-
-
+import type { IBoard } from '../../Models/boards'
 
 
 // 2023.02.06
@@ -31,54 +24,14 @@ import { useEffect } from 'react';
 //     })
 // }
 
-function convertForNav(arr_list: Array<IBoard>) : Array<IBoardNavItem> {
 
-    const navItem: IBoardNavItem = {
-        id: 0, 
-        boardName: '', 
-        boardType: '', 
-        parentBoard: 0, 
-        description: '', 
-        seq: 0, 
-        level: 0, 
-        idPath: '',
-        boardPath: ''
-    };
-
-    const navItems = new Array<IBoardNavItem>();
-
-    arr_list.forEach((item)=>{
-        navItem.id = item.id;
-        navItem.boardName = item.boardName;
-        navItem.boardType = item.boardType;
-        navItem.parentBoard = item.parentBoard;
-        navItem.description = item.description;
-        navItem.seq = item.seq;
-        navItem.level = item.level;
-        navItem.boardPath = item.boardPath;
-        navItems.push(navItem);       
-    })
-
-    //console.log(navItems);
-
-    return navItems;
-}
 
 function BoardMain(){
-    let boardAllData = useLoaderData() as Array<IBoard>;
-
-    //let data = boardLoader();
-    //const [boardList, setBoardList] = React.useState([]);
-    //console.log(`boardNavData ${boardNavData}`);
-
-    // const sideBoardNavProps = {
-    //     boardNavItems :  convertForNav(boardAllData) as Array<IBoardNavItem>
-    // }
-    const boardNavItems = convertForNav(boardAllData) as Array<IBoardNavItem>;
+    let boards = useLoaderData() as IBoard[];
 
     return(
         <div className='main-body'>
-            <SideBoardNav {...boardNavItems}  />
+            <SideBoardNav boards={boards}  />
             {/* <BoardPostList/> */}
             <Outlet />
         </div>

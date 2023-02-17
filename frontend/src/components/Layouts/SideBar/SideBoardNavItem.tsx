@@ -44,22 +44,47 @@ const DropdownLink = styled(Link)`
 
 const SubMenu = ({item} : {item:any}) => {
   const [subnav, setSubnav] = useState(false);
-
   const showSubnav = () => setSubnav(!subnav);
+
+  let boardNavTags = "";
+
+  const renderNavItems = (item: any)=>{
+
+    //boardNavTags += item.subNav ? `<SidebarLink title='${item.title}'>` : `<SidebarLink title='${item.title}'/>`
+    boardNavTags += `<SidebarLink><div><SidebarLabel>${item.title}</SidebarLabel></div>`
+    
+    if(item.subNav){
+      [...item.subNav].forEach((item)=>{
+        renderNavItems(item);
+      })
+    }
+
+    //boardNavTags += item.subNav ? `</SidebarLink>` : "";
+    boardNavTags += `</SideBarLink>`;
+
+    //console.log(boardNavTags);
+
+
+    return "";
+  }
+
+  // const populateBoardNavItem = (_item: any)=>{
+  //   let _board = item;
+  //   //console.log(board.title)
+  //   renderNavItems(item);    
+  // }
 
   return (
     <>
+      { item && renderNavItems(item) }
+
       <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
         <div>
           {item.icon}
           <SidebarLabel>{item.title}</SidebarLabel>
         </div>
         <div>
-          {item.subNav && subnav
-            ? item.iconOpened
-            : item.subNav
-            ? item.iconClosed
-            : null}
+          {item.subNav && subnav ? item.iconOpened : item.subNav ? item.iconClosed : null}
         </div>
       </SidebarLink>
 
@@ -67,10 +92,29 @@ const SubMenu = ({item} : {item:any}) => {
       {subnav &&
         item.subNav.map((item:any, index:any) => {
           return (
-            <DropdownLink to={item.path} key={index}>
-              {item.icon}
-              <SidebarLabel>{item.title}</SidebarLabel>
-            </DropdownLink>
+            // <DropdownLink to={item.path} key={index}>
+            //   {item.icon}
+            //   <SidebarLabel>{item.title}</SidebarLabel>
+            // </DropdownLink>
+
+            <>
+              {console.log(item.title)}
+              
+              <SidebarLink to={item.path}>
+                <div><SidebarLabel>{item.title}</SidebarLabel></div>
+                <div>{item.subNav && subnav ? item.iconOpened : item.subNav ? item.iconClosed : null}</div>
+              </SidebarLink>
+
+              
+
+              {item.subNav && item.subNav.map((item:any, index:any)=>{
+                console.log(`title >>>> ${item.title}`);
+              })} 
+
+            </>
+            
+            
+            
           );
         })}
     </>
