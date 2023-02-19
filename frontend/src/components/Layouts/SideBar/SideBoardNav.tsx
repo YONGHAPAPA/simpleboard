@@ -12,8 +12,6 @@ import * as IoIcons from 'react-icons/io';
 import * as ImIcons from 'react-icons/im';
 import * as RiIcons from 'react-icons/ri';
 
-
-
 import { SidebarData } from '../../SiderbarData';
 
 import SideBoardNavItem from './SideBoardNavItem';
@@ -47,6 +45,28 @@ const SidebarNav = styled.nav`
     justify-content: center;
     position: fixed;
     //top: 0;
+`;
+
+const SidebarLink = styled(Link)`
+    display: flex;
+    color: #e1e9fc;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    list-style: none;
+    height: 60px;
+    text-decoration: none;
+    font-size: 14px;
+
+    &:hover {
+    background: #252831;
+    border-left: 4px solid #632ce4;
+    cursor: pointer;
+    }
+`
+
+const SidbarLabel = styled.span`
+    margin-left: 13px;
 `;
 
 const SidebarWrap = styled.div`
@@ -105,7 +125,7 @@ function convertBoardsForNav(boards: IBoard[]) : any {
 
     //console.log(navItems);
 
-    const resultSideBarData = [
+    const boardListData = [
 
         {
             title: 'Overview', 
@@ -113,11 +133,19 @@ function convertBoardsForNav(boards: IBoard[]) : any {
             icon: <AiIcons.AiFillHome/>,
             iconClosed: <RiIcons.RiArrowDownSFill />,
             iconOpened: <RiIcons.RiArrowUpSFill />,
+            showSubNav: true,
+            id: '1',
+            level: '1',
+            boardPath: '1',
             subNav: [
                 {
                     title: 'Users', 
                     path: '#',
                     icon: <IoIcons.IoIosPaper />,
+                    showSubNav: true,
+                    id: '3',
+                    level: '2',
+                    boardPath: '1>3',
                 },
                 {
                     title: 'Revenue', 
@@ -125,11 +153,33 @@ function convertBoardsForNav(boards: IBoard[]) : any {
                     icon: <IoIcons.IoIosPaper />, 
                     iconClosed: <RiIcons.RiArrowDownSFill />,
                     iconOpened: <RiIcons.RiArrowUpSFill />,
+                    showSubNav: true,
+                    id: '4',
+                    level: '2',
+                    boardPath: '1>4',
                     subNav: [
                         {
                             title: 'Reports', 
                             path: '#',
-                            icon: <IoIcons.IoIosPaper />
+                            showSubNav: true,
+                            id: '5',
+                            level: '3',
+                            boardPath: '1>4>5',
+                            icon: <IoIcons.IoIosPaper />,
+                            iconClosed: <RiIcons.RiArrowDownSFill />,
+                            iconOpened: <RiIcons.RiArrowUpSFill />,
+                            subNav: [
+                                {
+                                    title:'dddd', 
+                                    path:'#', 
+                                    showSubNav: false,
+                                    id: '6',
+                                    boardPath: '1>4>5>6', 
+                                    icon: <IoIcons.IoIosPaper />,
+                                    iconClosed: <RiIcons.RiArrowDownSFill />,
+                                    iconOpened: <RiIcons.RiArrowUpSFill />,
+                                }
+                            ]
 
                         }
                     ]
@@ -139,59 +189,80 @@ function convertBoardsForNav(boards: IBoard[]) : any {
         {
             title: 'Products',
             path: '#',
+            showSubNav: false,
+            id: '2',
+            level: '1',
+            boardPath: '2',
             icon: <FaIcons.FaCartPlus />
         }
     ];
 
-    return resultSideBarData;
+    return boardListData;
 }
 
 
-function recurSub(item: any){
+//function BoardNav({boards}: {boards: IBoard[]}) {
+function BoardNav({boardList}: {boardList: any}) {
 
-    
-    //recurSub()
-}
-
-function BoardNav({boards}: {boards: IBoard[]}) {
-
-    //let boardNavData = props.boardNavData;
-    //console.log(boards);
-    let navItems = [...boards];
-
-
-
-    //console.log(_navItems);
+    let navItems = [...boardList];
 
     //const [sidebar, setSidebar] = useState(false);
-    const [loadComplete, setLoadComplete] = useState(true);
+    //const [loadComplete, setLoadComplete] = useState(true);
+    //const [toggle, setToggle] = useState(false);
+    //showSubNav, 
 
-    const [attribues, setAttribues] = useState({
-        sidebar: false, 
-        boardData: [{
-            title: 'Loading Board Info ...',
-            //path: '/support',
-            path: '',
-            icon: <IoIcons.IoMdHelpCircle />
-          },]
+    console.log(navItems);
+
+    //console.log(...boardList);
+
+    const [sideBoardNavProps, setSideBoardNavProps] = useState({
+        navItems: [...boardList], 
+        showSubNav : false
     });
 
+    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        console.log('element click')
+    }
 
-    useEffect(()=>{
-        return()=>{
-            //console.log("useEffect 2");
-        }
-    }, []);
 
-    //const allBoardData = useDeferredValue(attribues.boardData);
-    //const showSidebar = () => setSidebar(!sidebar);
-    //const changeHandler = ()=> setAttribues({...attribues, "sidebar": !attribues.sidebar});
-
-    // GetAllBoard().then((res)=>{
-    //     setLoadComplete(true);
-    //     //setAttribues({...attribues, "dataLoadComplete": true})
+    // const [attribues, setAttribues] = useState({
+    //     sidebar: false, 
+    //     boardData: [{
+    //         title: 'Loading Board Info ...',
+    //         //path: '/support',
+    //         path: '',
+    //         icon: <IoIcons.IoMdHelpCircle />
+    //       },]
     // });
 
+    // const showNav = ()=>{
+    //     setToggle(!toggle);
+    // }
+
+    // useEffect(()=>{
+    //     console.log(`>>>>>> toggle : ${toggle}`)
+    //     return()=>{
+    //         //console.log("useEffect 2");
+    //     }
+    // }, [toggle]);
+
+    const populateSubBoard = (boards: any, rootBoard: any)=>{
+        //console.log(boards)
+        let subBoards = rootBoard;
+
+        Array.from(boards).map((item: any, index: number)=>{
+            //console.log(item.title);
+            subBoards.push(<SideBoardNavItem board={item} navItems={navItems} sideBoardNavProps={sideBoardNavProps} setSideBoardNavProps={setSideBoardNavProps} />);
+
+            if(item.subNav && item.showSubNav){
+                populateSubBoard(item.subNav, subBoards);
+            }
+        })
+
+        return subBoards;
+    }
+
+    
     return (
         <>
             <IconContext.Provider value={{color:'#fff'}}>
@@ -210,12 +281,34 @@ function BoardNav({boards}: {boards: IBoard[]}) {
                         <AiIcons.AiOutlineClose onClick={changeHandler} />
                     </NavIcon> */}
 
-                    {/* {SidebarData.map((item, index) => {
-                        return <SubMenu item={item} key={index} />;
-                    })} */}
-
                     <>
-                        {loadComplete ? navItems.map((item, index) => { return <SideBoardNavItem item={item} key={index} />; }) : <div>&nbsp; loading....&nbsp; <Spinner/></div> }
+                        {/* {loadComplete ? navItems.map((item, index) => { 
+                            return <SideBoardNavItem item={item} key={index} />; 
+                            }) : <div>&nbsp; loading....&nbsp; <Spinner/></div> 
+                        }; */}
+
+                        {/* {
+                            navItems.map((board, index) => {
+                                return renderNavTree(board, index, 0);
+                            })
+                        } */}
+
+                        {/* 전체 BoardList 데이터에 대해 하위까지 루프 돌려서 제일 하위까지 메뉴를 그려준다  */}
+
+                        {
+                            navItems.map((item:any, index:number)=>{
+
+                                const rootBoard = [<SideBoardNavItem board={item} navItems={navItems} sideBoardNavProps={sideBoardNavProps} setSideBoardNavProps={setSideBoardNavProps} />];
+
+                                if(item.subNav && item.showSubNav){
+                                    return populateSubBoard(item.subNav, rootBoard);
+                                    //rootBoard.push(subBoards);
+                                }
+                                
+                                return rootBoard;
+                            })
+                        }
+
                     </>
                 </SidebarWrap>
             </SidebarNav>
@@ -228,7 +321,7 @@ function BoardNav({boards}: {boards: IBoard[]}) {
 
 
 
-export default function SideBoardNav({boards} : {boards:IBoard[]}){
+export default function SideBoardNav({boardList} : {boardList:IBoard[]}){
     // boardItems.forEach((item)=>{
     //     //console.log(item);
     // })
@@ -236,7 +329,7 @@ export default function SideBoardNav({boards} : {boards:IBoard[]}){
     return(
         <div className='sidebar' >
             {/* <SideBar boardNavData={this.state.boardNavData}/> */}
-            <BoardNav boards={convertBoardsForNav(boards)}  />
+            <BoardNav boardList={convertBoardsForNav(boardList)}  />
         </div>
     );
 

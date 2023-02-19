@@ -31,7 +31,7 @@ function BoardMain(){
 
     return(
         <div className='main-body'>
-            <SideBoardNav boards={boards}  />
+            <SideBoardNav boardList={boards}  />
             {/* <BoardPostList/> */}
             <Outlet />
         </div>
