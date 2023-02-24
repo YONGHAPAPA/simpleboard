@@ -338,7 +338,7 @@ const initBoardsForNav = (rootBoards: IBoard[], boards: IBoard[]) => {
             rootBoard.id == board.parentBoard
         ))
 
-        if(childBoards.length > 0){
+        if(childBoards.length>0){
             console.log(childBoards);
             initBoardsForNav(childBoards, boards);
         }
