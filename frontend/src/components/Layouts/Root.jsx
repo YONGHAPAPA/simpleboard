@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import Header from './Head/Header';
-import BoardMain from './Body/BoardMain';
+import BoardRoot from './Body/BoardRoot';
 import AboutMain from './Body/AboutMain';
 import BoardPostList from './Body/BoardPostList';
 import DashBoard from './Body/DashBoard';
@@ -14,6 +14,8 @@ import { getAllBoardList } from '../Models/boards'
 
 
 async function boardLoader(){
+
+    //console.log("boardLoader");
     //console.log("boardLoader start!")
     //const inter = await sleep(2000, "boardLoader", true);
     //console.log("sleep complete....");
@@ -50,7 +52,7 @@ class Root extends React.Component {
             createRoutesFromElements(
                 <Route path="/" element={ <Layout/> } >
                     <Route index element={ <DashBoard />} /> 
-                    <Route path="/board" loader={ boardLoader } element={ <BoardMain />}>
+                    <Route path="/board" loader={ boardLoader } element={ <BoardRoot />}>
                         <Route index element={ <BoardAnnouncement />}/>
                         <Route path='list' element={ <BoardPostList />}/>
                     </Route>
