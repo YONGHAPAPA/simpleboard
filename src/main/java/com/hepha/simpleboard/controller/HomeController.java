@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hepha.simpleboard.model.Article;
+import com.hepha.simpleboard.model.Post;
 import com.hepha.simpleboard.model.Book;
-import com.hepha.simpleboard.repository.ArticleRepository;
-import com.hepha.simpleboard.repository.BookRepository;
-import com.hepha.simpleboard.service.ArticleService;
+import com.hepha.simpleboard.repository.PostRepository;
+//import com.hepha.simpleboard.repository.BookRepository;
+import com.hepha.simpleboard.service.PostService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,15 +32,15 @@ public class HomeController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    @Qualifier("namedParameterJdbcBookRepository")    
-    private BookRepository bookRepository;
+    // @Autowired
+    // @Qualifier("namedParameterJdbcBookRepository")    
+    // private BookRepository bookRepository;
 
     @Autowired
-    private ArticleRepository articleRepository;
+    private PostRepository articleRepository;
 
     @Autowired
-    private ArticleService articleService;
+    private PostService articleService;
 
     private final Logger logger = LogManager.getLogger(HomeController.class);
 
@@ -59,7 +59,7 @@ public class HomeController {
         logger.debug("Standard :: Article List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         ModelAndView model = new ModelAndView();
-        List<Article> result = articleService.getArticleList();
+        List<Post> result = articleService.getArticleList();
 
 
 
@@ -109,12 +109,12 @@ public class HomeController {
 
 
         //Article 리스트 가져오기
-        List<Article> article_list = articleRepository.findAll();
+        List<Post> article_list = articleRepository.findAll();
 
         logger.debug("article_list.size: " + article_list.size());
 
         //for(int i=0; i < article_list.size(); i++)
-        for(Article item : article_list){
+        for(Post item : article_list){
             logger.debug("ID : " + item.toString());
         }
 

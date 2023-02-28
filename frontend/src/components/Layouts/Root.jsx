@@ -14,18 +14,10 @@ import { getAllBoardList } from '../Models/boards'
 
 
 async function boardLoader(){
-
-    //console.log("boardLoader");
-    //console.log("boardLoader start!")
+    const boardListData = "";
     //const inter = await sleep(2000, "boardLoader", true);
-    //console.log("sleep complete....");
-
-    let boardSetData = new Array().fill(null);
-    const boardListData = await getAllBoardList();
-    
-    //console.log(`boardListData : ${boardListData}`);
-    //console.log(boardListData.length);
-
+    //let boardSetData = new Array().fill(null);
+    //const boardListData = await getAllBoardList();
     return boardListData;
 }
 
@@ -52,9 +44,9 @@ class Root extends React.Component {
             createRoutesFromElements(
                 <Route path="/" element={ <Layout/> } >
                     <Route index element={ <DashBoard />} /> 
-                    <Route path="/board" loader={ boardLoader } element={ <BoardRoot />}>
+                    <Route path="/board" element={ <BoardRoot />}>
                         <Route index element={ <BoardAnnouncement />}/>
-                        <Route path='list' element={ <BoardPostList />}/>
+                        <Route path=":id" element={ <BoardPostList />}/>
                     </Route>
                     <Route path="/about" element={ <AboutMain/> } />
                 </Route>

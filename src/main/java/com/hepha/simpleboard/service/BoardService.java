@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hepha.simpleboard.model.Article;
+import com.hepha.simpleboard.model.Post;
 import com.hepha.simpleboard.model.Board;
 import com.hepha.simpleboard.repository.BoardRepository;
 import lombok.extern.log4j.Log4j;

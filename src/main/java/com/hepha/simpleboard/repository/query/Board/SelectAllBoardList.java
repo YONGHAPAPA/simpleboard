@@ -1,4 +1,4 @@
-package com.hepha.simpleboard.repository.query.Board;
+package com.hepha.simpleboard.repository.query.board;
 
 public class SelectAllBoardList {
     public static final String SQL = 

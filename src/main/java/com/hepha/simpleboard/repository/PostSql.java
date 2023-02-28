@@ -1,6 +1,6 @@
 package com.hepha.simpleboard.repository;
 
-public class ArticleSql {
+public class PostSql {
 
     /* 
      * 

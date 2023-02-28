@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
-public class Article {
+public class Post {
     private String id;
     private String title;
     private String content;

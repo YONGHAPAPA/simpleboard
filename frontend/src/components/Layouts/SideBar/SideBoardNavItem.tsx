@@ -31,7 +31,7 @@ const SidebarLink = styled(Link)`
   align-items: center;
   padding: 15px;
   list-style: none;
-  height: 60px;
+  height: 53px;
   text-decoration: none;
   font-size: 14px;
 
@@ -53,9 +53,9 @@ const getIndentLevel = (level:number) => {
 
 
 const ButtonArrowUpDown = styled.button`
-  font-size: 0.5rem;
-  height: 1rem;
-  width: 1rem;
+  font-size: 0.9rem;
+  height: 1.2rem;
+  width: 1.7rem;
   font-weight: bold;
   margin: 0.5rem;
   padding: 0em 0em 0em 0em;  
@@ -64,9 +64,10 @@ const ButtonArrowUpDown = styled.button`
   border: 0px solid silver;
   border-radius: 2px;
 
-  
-
-  
+  &:hover {
+    background: rgba(255, 255, 128, .5);
+    cursor: pointer;
+  }
 `
 
 
@@ -82,45 +83,40 @@ const DropdownLink = styled(Link)`
   font-size: 14px;
 
   &:hover {
-    background: #632ce4;
+    background: pink;
     cursor: pointer;
   }
 `;
 
 
 function SideBoardNavItem(props:IPros){
-
   //console.log("SideBoardNavItem Render")
-
   const board = props.board;
-  const sideBoardNavProps = props.sideBoardNavProps;
-  const setSideBoardNavProps = props.setSideBoardNavProps;
 
   const toggleSubNavItem = () => {
     props.onClick(board.id, !board.showSubNav);
   }
 
-
-  const clickNavItem = () => {
-
+  const clickNavItem = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    //event.preventDefault();
+    console.log("clickNavItem");
   }
 
 
   return (
    <>
-   
       {/* 
           [M.RMK:2023.02.20]
           리스트로 표현되는 컴포는트 내에 요소에는 별도로 key 값을 설정할 필요없음 
       */}
-      <SidebarLink to={board.path} onClick={clickNavItem}>
+      {/* <SidebarLink to={board.path} onClick={clickNavItem}> */}
+      <SidebarLink to={`${board.id}`} onClick={clickNavItem}>
         <SidebarLabel indentLevel={board.level}>
           <span>
             {/* [{board.level}] */}
             {board.title}&nbsp;
             {
               // board.subNav && (board.showSubNav ? <RiIcons.RiArrowUpSFill/> : <RiIcons.RiArrowDownSFill />) 
-              
               board.subNav && (board.showSubNav ? <ButtonArrowUpDown onClick={toggleSubNavItem}>▴</ButtonArrowUpDown> : <ButtonArrowUpDown onClick={toggleSubNavItem}>▾</ButtonArrowUpDown>) 
             }
           </span>

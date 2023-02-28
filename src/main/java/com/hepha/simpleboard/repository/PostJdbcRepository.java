@@ -12,13 +12,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.hepha.simpleboard.model.Article;
-import com.hepha.simpleboard.repository.ArticleSql;
+import com.hepha.simpleboard.model.Post;
+import com.hepha.simpleboard.repository.PostSql;
 
 
 
 @Repository
-public class ArticleJdbcRepository implements ArticleRepository {
+public class PostJdbcRepository implements PostRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -29,12 +29,12 @@ public class ArticleJdbcRepository implements ArticleRepository {
     @Override
     public int getCountByArticleType(String article_type) {
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("article_type", article_type);
-        return namedParameterJdbcTemplate.queryForObject(ArticleSql.GET_ARTICLE_COUNT_BY_TYPE, namedParameters, Integer.class);
+        return namedParameterJdbcTemplate.queryForObject(PostSql.GET_ARTICLE_COUNT_BY_TYPE, namedParameters, Integer.class);
     }
 
     @Override
-    public List<Article> findAll() {
-        return namedParameterJdbcTemplate.query(ArticleSql.SELECT, EmptySqlParameterSource.INSTANCE, (rs, rowNum) -> new Article(
+    public List<Post> findAll() {
+        return namedParameterJdbcTemplate.query(PostSql.SELECT, EmptySqlParameterSource.INSTANCE, (rs, rowNum) -> new Post(
             rs.getString("id"), 
             rs.getString("title"), 
             rs.getString("content"), 
@@ -48,23 +48,33 @@ public class ArticleJdbcRepository implements ArticleRepository {
     }
 
     @Override
-    public int create(Article article) {
-        return namedParameterJdbcTemplate.update(ArticleSql.CREATE, new BeanPropertySqlParameterSource(article));
+    public int create(Post article) {
+        return namedParameterJdbcTemplate.update(PostSql.CREATE, new BeanPropertySqlParameterSource(article));
     }
 
     @Override
-    public Optional<Article> findyId(String id) {
+    public Optional<Post> findyId(String id) {
         // TODO Auto-generated method stub
         return Optional.empty();
     }
 
     @Override
-    public int update(Article article) {
-        return namedParameterJdbcTemplate.update(ArticleSql.UPDATE, new BeanPropertySqlParameterSource(article));      
+    public List<Post> getPostByBoardId(String id){
+        String query = "SELECT ID, TITLE, CONTENT, ARTICLE_TYPE, DELETE_FLG, CRE_ID, CRE_DT, UPD_ID, UPD_DT FROM ARTICLE WHERE ";
+
+        SqlParameterSource namedParams = new SqlParameterSource() 
+        return namedParameterJdbcTemplate.queryForObject(query, null, null)
     }
 
     @Override
-    public int delete(Article article) {
-        return namedParameterJdbcTemplate.update(ArticleSql.DELETE, new BeanPropertySqlParameterSource(article));
+    public int update(Post article) {
+        return namedParameterJdbcTemplate.update(PostSql.UPDATE, new BeanPropertySqlParameterSource(article));      
     }
+
+    @Override
+    public int delete(Post article) {
+        return namedParameterJdbcTemplate.update(PostSql.DELETE, new BeanPropertySqlParameterSource(article));
+    }
+
+
 }

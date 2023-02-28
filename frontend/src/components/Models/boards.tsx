@@ -18,10 +18,21 @@ export interface IBoard {
     updDt: Date, 
 }
 
-
-
 export interface IBoards extends Array<IBoard>{}
 
+export interface IPost {
+    id: number, 
+    title: string, 
+    content: string, 
+    postType: string, 
+    deleteFlg: string, 
+    creId: string, 
+    creDt: Date, 
+    updId: string, 
+    updDt: Date,
+}
+
+export interface IPosts extends Array<IPost>{}
 
 export function initBoardList(): IBoards {
 
@@ -49,18 +60,24 @@ export function initBoardList(): IBoards {
 
 
 
-export async function getAllBoardList(): Promise<IBoard[]>{
-    const jsonData = await doFetchJSON("board/getAllBoardList", "getAllBoardList");
+export async function getAllBoardList(): Promise<IBoards>{
+
+    const boards = await doFetchJSON("board/getAllBoards", "getAllBoards");
     
     //[M.RMK:2023.02.01] jsonData 는 유사배열(Array-like object) 이므로 forEach(), map() 등 함수를 바로 사용할수 없음
     //Array.from 으로 감싸서 루프처리해줌(length 속성이 있어야 유사배열임)
     //또는 열거연산자 '...' 로도 사용가능
     //참조 : stackdiary.com/guides/typeerror-foreach-is-not-a-function/
+    //return [...jsonData];
 
-    // Array.from(jsonData).forEach((item)=>{
-    //     console.log(item);
-    // });
-    return [...jsonData];
+    //console.log(...boards);
+
+    return [...boards];
+}
+
+export async function getPostsByBoardId(): Promise<IPosts> {
+    const posts = await doFetchJSON("board/getPostsByBaordId", "getPostByBoardId");
+    return [...posts]
 }
 
 

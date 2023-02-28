@@ -14,10 +14,11 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.hepha.simpleboard.model.Board;
+import com.hepha.simpleboard.repository.query.board.SelectAllBoardList;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import com.hepha.simpleboard.utils.coSql;
-import com.hepha.simpleboard.repository.query.Board.SelectAllBoardList;
 
 
 @Repository
@@ -36,7 +37,7 @@ public class BoardJdbcRepository implements BoardRepository {
     @Override
     public int getCountByBoardType(String boardType) {
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("article_type", boardType);
-        return namedParameterJdbcTemplate.queryForObject(ArticleSql.GET_ARTICLE_COUNT_BY_TYPE, namedParameters, Integer.class);
+        return namedParameterJdbcTemplate.queryForObject(PostSql.GET_ARTICLE_COUNT_BY_TYPE, namedParameters, Integer.class);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class BoardJdbcRepository implements BoardRepository {
 
     @Override
     public int create(Board board) {
-        return namedParameterJdbcTemplate.update(ArticleSql.CREATE, new BeanPropertySqlParameterSource(board));
+        return namedParameterJdbcTemplate.update(PostSql.CREATE, new BeanPropertySqlParameterSource(board));
     }
 
     @Override
@@ -97,11 +98,11 @@ public class BoardJdbcRepository implements BoardRepository {
 
     @Override
     public int update(Board board) {
-        return namedParameterJdbcTemplate.update(ArticleSql.UPDATE, new BeanPropertySqlParameterSource(board));      
+        return namedParameterJdbcTemplate.update(PostSql.UPDATE, new BeanPropertySqlParameterSource(board));      
     }
 
     @Override
     public int delete(Board board) {
-        return namedParameterJdbcTemplate.update(ArticleSql.DELETE, new BeanPropertySqlParameterSource(board));
+        return namedParameterJdbcTemplate.update(PostSql.DELETE, new BeanPropertySqlParameterSource(board));
     }
 }

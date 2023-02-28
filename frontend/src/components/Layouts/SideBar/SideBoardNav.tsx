@@ -17,10 +17,7 @@ import { SidebarData } from '../../SiderbarData';
 import SideBoardNavItem from './SideBoardNavItem';
 import { RiContactsBookLine } from 'react-icons/ri';
 
-import { getAllBoardList } from '../../Models/boards'
-import type { IBoard } from '../../Models/boards';
-
-
+import type { IBoard, IBoards } from '../../Models/boards';
 
 
 const Nav = styled.div`
@@ -41,6 +38,7 @@ const NavIcon = styled(Link)`
     align-items:center
 `;
 
+
 const SidebarNav = styled.nav`
     background: gray;
     width: 190px;
@@ -50,6 +48,7 @@ const SidebarNav = styled.nav`
     position: fixed;
     //top: 0;
 `;
+
 
 const SidebarLink = styled(Link)`
     display: flex;
@@ -69,13 +68,16 @@ const SidebarLink = styled(Link)`
     }
 `
 
+
 const SidbarLabel = styled.span`
     margin-left: 13px;
 `;
 
+
 const SidebarWrap = styled.div`
     width:100%;
 `;
+
 
 const spinnerRotate = keyframes`
     0% {
@@ -86,12 +88,12 @@ const spinnerRotate = keyframes`
     }
 `
 
+
 const Spinner = styled(ImIcons.ImSpinner2)`
     color:teal;
     font-size: 0.7rem;
     animation: ${spinnerRotate} 3s infinite;
 `;
-
 
 
 export interface ISideBoardNavItem {
@@ -106,32 +108,13 @@ export interface ISideBoardNavItem {
 }
 
 
-function convertBoardsForNav(boards: IBoard[]) : any {
+function convertBoardsForNav(navBoardItems: ISideBoardNavItem[]) : any {
 
     //console.log("convertBoardsForNav");
     //let navItem: IBoardNavItem;
     let navItems :ISideBoardNavItem[] = Array<ISideBoardNavItem>();
 
-    boards.forEach((board)=>{
-        // const navItem: ISideBoardNavItem = {
-        //     id: item.id, 
-        //     boardName: item.boardName, 
-        //     boardType: item.boardType, 
-        //     parentBoard: item.parentBoard, 
-        //     description: item.description, 
-        //     seq: item.seq, 
-        //     level: item.level, 
-        //     idPath: item.idPath, 
-        //     boardPath: item.boardPath
-        // }
-
-        // navItems.push(navItem);       
-
-        console.log(board.boardName);
-    })
-
-    //console.log(boards);
-
+    
     const boardListData = [
 
         {
@@ -198,14 +181,14 @@ function convertBoardsForNav(boards: IBoard[]) : any {
     ];
 
     return boardListData;
-    //return boards;
+    //return navBoardItems;
 }
 
 
 const toggleNavItem = (boardId: number, showSubNav: boolean, navItems: any) => {
     let newBoard = navItems.map((item:any)=>{
         if(item.id == boardId){
-            Object.assign(item, {"showSubNav":showSubNav})
+            Object.assign(item, {"showSubNav": showSubNav})
         }
 
         if(item.subNav){
@@ -221,14 +204,18 @@ const toggleNavItem = (boardId: number, showSubNav: boolean, navItems: any) => {
 
 
 //function BoardNav({boards}: {boards: IBoard[]}) {
-function BoardNav({boardList}: {boardList: any}) {
+//function BoardNav(boardList: ISideBoardNavItem[]) {
+function BoardNav({boardNavItems}: {boardNavItems: ISideBoardNavItem[]}) {
 
-    let navItems = [...boardList];
+    //let navItems = [...boardList];
+    let _navItems = Array.from([...boardNavItems]);
 
     const [sideBoardNavProps, setSideBoardNavProps] = useState({
-        navItems: [...boardList], 
+        navItems: boardNavItems, 
         showSubNav : false
     });
+
+    //console.log(sideBoardNavProps.navItems);
 
     const handleClick = (boardId: number, showSubNav: boolean) => {
         //console.log(`handleClick ${boardId} ${showSubNav}`);
@@ -243,15 +230,10 @@ function BoardNav({boardList}: {boardList: any}) {
     })
 
 
-    const populateSubBoard = (boards: any, rootBoard: any)=>{
-
-        //console.log(boards)
-        //console.log("populateSubBoard >>>> ");
-
+    const renderBoardNav = (boards: any, rootBoard: any)=>{
         let subBoards = rootBoard;
 
         Array.from(boards).map((item: any, index: number)=>{
-            
             /*
                 [M.RMK]:2023.02.20
                 어떤 'Coponent' 간에 List 형태로 랜더링 될때는 key 값(유니크값) 할당이 필요하다. 정의 하지 않으면 
@@ -259,10 +241,10 @@ function BoardNav({boardList}: {boardList: any}) {
                 라고 wanrning 메세지가 발생.
                 <SideBoardNavItem key={item.id} ...
             */           
-            subBoards.push(<SideBoardNavItem key={item.id} board={item} navItems={navItems} sideBoardNavProps={sideBoardNavProps} setSideBoardNavProps={setSideBoardNavProps} onClick={handleClick} />);
+            subBoards.push(<SideBoardNavItem key={item.id} board={item} navItems={sideBoardNavProps.navItems} sideBoardNavProps={sideBoardNavProps} setSideBoardNavProps={setSideBoardNavProps} onClick={handleClick} />);
 
             if(item.subNav && item.showSubNav){
-                populateSubBoard(item.subNav, subBoards);
+                renderBoardNav(item.subNav, subBoards);
             }
         })
 
@@ -300,18 +282,17 @@ function BoardNav({boardList}: {boardList: any}) {
                             sideBoardNavProps.navItems.map((item:any, index:number)=>{
                                 //console.log(`item.id ${item.id}`);
 
-                                const rootBoard = [<SideBoardNavItem key={item.id}  board={item} navItems={navItems} sideBoardNavProps={sideBoardNavProps} setSideBoardNavProps={setSideBoardNavProps} onClick={handleClick} />];
+                                const rootBoard = [<SideBoardNavItem key={item.id}  board={item} navItems={sideBoardNavProps.navItems} sideBoardNavProps={sideBoardNavProps} setSideBoardNavProps={setSideBoardNavProps} onClick={handleClick} />];
                                 //const rootBoard = [<SideBoardNavItem key={item.id}  board={item} />];
 
                                 if(item.subNav && item.showSubNav){
-                                    return populateSubBoard(item.subNav, rootBoard);
+                                    return renderBoardNav(item.subNav, rootBoard);
                                     //rootBoard.push(subBoards);
                                 }
                                 
                                 return rootBoard;
                             })
                         }
-
                     </>
                 </SidebarWrap>
             </SidebarNav>
@@ -323,62 +304,69 @@ function BoardNav({boardList}: {boardList: any}) {
 }
 
 
-const initBoardsForNav = (rootBoards: IBoard[], boards: IBoard[]) => {
-
-    let navItem : ISideBoardNavItem = { id:1, title:"", path:"", icon:"", level:0, boardPath:""}
+const arrangeIBoardsForNav = (rootBoards: IBoard[], boards: IBoard[], step: number) => {
+    //console.log(`step : ${step}`)
+    //let navItem : ISideBoardNavItem = { id:1, title:"", path:"", icon:"", level:0, boardPath:""}
+    let navItem: ISideBoardNavItem;
     let boardNavItems: ISideBoardNavItem[] = Array<ISideBoardNavItem>();
-    boardNavItems.push(navItem)
-
     boardNavItems = Array<ISideBoardNavItem>();
 
-    rootBoards.map((rootBoard:IBoard)=>{
-        //console.log(`${rootBoard.id} : ${rootBoard.idPath}`);
-
-        let childBoards = boards.filter((board:IBoard)=>(
-            rootBoard.id == board.parentBoard
-        ))
-
-        if(childBoards.length>0){
-            console.log(childBoards);
-            initBoardsForNav(childBoards, boards);
+    rootBoards.forEach((rootBoard)=>{
+        navItem = {
+            "title": rootBoard.boardName, 
+            "path": rootBoard.idPath, 
+            "icon": rootBoard.boardType, 
+            "showSubNav": false, 
+            "id": rootBoard.id, 
+            "level": rootBoard.level, 
+            "boardPath": rootBoard.boardPath,
         }
 
-        //initBoardsForNav(childBoard, boards);
+        let childBoards = boards.filter((board)=>(
+            rootBoard.id == board.parentBoard
+        )).sort((a, b)=>{ return a.seq - b.seq})
+
+        if(childBoards.length > 0){
+            let subNavItems: ISideBoardNavItem[] = arrangeIBoardsForNav(childBoards, boards, step++);
+            Object.assign(navItem, {"subNav": subNavItems})
+        }
+
+        boardNavItems.push(navItem);
     })
-
-
-
-
-
 
     return boardNavItems;
 }
 
-//export default function SideBoardNav({boardList} : {boardList:IBoard[]}){
-export default function SideBoardNav(){
 
+
+export default function SideBoardNav({boards} : {boards:IBoards}){
     //console.log("Render SideBoardNav Start !!!! ");
-    
-    let boardList:IBoard[] = Array<IBoard>();
-    let boardNavList: ISideBoardNavItem[];
+    const [navItems, setNavItems] = useState<ISideBoardNavItem[]>([]);
 
-    getAllBoardList().then((boards)=>{
+    //let boardList:IBoard[] = Array<IBoard>();
+    let boardNavList: ISideBoardNavItem[] = Array<ISideBoardNavItem>();
 
-        //1 level의 boards 를 seq 오름차순으로 정렬
-        const rootBoard: IBoard[] = boards.filter(board => board.level == 1).sort(function(a:IBoard, b:IBoard){
+    useEffect(()=>{
+        convertBoardsForNav(boards);
+    }, []);
+
+    const convertBoardsForNav = (boards: IBoards) => {
+        const rootBoard: IBoards = boards.filter((board)=>(
+            board.level == 1
+        )).sort((a,b)=>{
             return a.seq - b.seq;
         })
 
-        boardNavList = initBoardsForNav(rootBoard, boards)
-        
-    })
-
+        boardNavList = arrangeIBoardsForNav(rootBoard, boards, 1);
+        setNavItems(boardNavList);
+    }
     
-
     return(
         <div className='sidebar' >
             {/* <SideBar boardNavData={this.state.boardNavData}/> */}
-            <BoardNav boardList={convertBoardsForNav(boardList)}  />
+            
+            { navItems.length > 0 
+            && <BoardNav boardNavItems={navItems}  /> }
         </div>
     );
 

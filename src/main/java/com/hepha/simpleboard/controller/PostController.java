@@ -1,4 +1,4 @@
-package com.hepha.simpleboard.controller.standard;
+package com.hepha.simpleboard.controller;
 
 import java.util.List;
 
@@ -7,18 +7,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hepha.simpleboard.model.Article;
+import com.hepha.simpleboard.model.Post;
 
-import lombok.extern.log4j.Log4j2;
+//import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;;
 
 
-@Log4j2
+
+
+
 @Controller
-public class ArticleController {
+public class PostController {
+
+    Logger logger = LogManager.getLogger(PostController.class);
     
-    @GetMapping("/standard/articleList")
+    @GetMapping("/postList")
     public ModelAndView getArticleList() {
-        log.debug("getArticleList >>>>>>>>>>>>>>>>>>>>>>>>>>>>..");
+        logger.debug("getArticleList >>>>>>>>>>>>>>>>>>>>>>>>>>>>..");
 
         ModelAndView model = new ModelAndView();
         model.setViewName("standard/articlelist");
@@ -26,9 +32,9 @@ public class ArticleController {
     }
 
 
-    @GetMapping("/home/articlelist2")
+    @GetMapping("/postlist2")
     public void articleList(){
-        log.debug("Standard :: Article List 2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        logger.debug("Standard :: Article List 2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         // ModelAndView model = new ModelAndView();
         // //List<Article> result = articleService.getArticleList();
