@@ -4,7 +4,7 @@
 
 
 CREATE TABLE `POST` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL ,
   `TITLE` varchar(500) NOT NULL,
   `CONTENT` text NOT NULL,
   `POST_TYPE` varchar(5) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `COMMENT` (
 
 
 CREATE TABLE `BOARD` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL,
   `BOARD_NAME` varchar(200) NOT NULL,
   `BOARD_TYPE` varchar(10) NOT NULL,
   `PARENT_BOARD` int(11) DEFAULT NULL,

@@ -11,7 +11,7 @@ public interface PostRepository {
 
     List<Post> findAll();
 
-    List<Post> getPostByBoardId(String id);
+    List<Post> getPostByBoardId(String boardId, Integer limit, Integer pagenum);
 
     int create(Post article);
 

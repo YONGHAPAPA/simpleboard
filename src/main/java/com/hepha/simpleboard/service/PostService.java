@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 public class PostService {
     
+    @Autowired
     private final PostRepository postRepository;
 
     //@Autowired
@@ -21,9 +22,15 @@ public class PostService {
     }
 
 
-    @Autowired
-    public List<Post> getPostsByBoardId(int boardId){
-        return this.postRepository.findAll();
+    //@Autowired
+    public List<Post> getPostsByBoardId(String boardId, Integer limit, Integer pagenum){
+        return this.postRepository.getPostByBoardId(boardId, limit, pagenum);
     }
+
+
+    // @Autowired
+    // public List<Post> getArticleList(){
+    //     return this.postRepository.findAll();
+    // }
 
 }

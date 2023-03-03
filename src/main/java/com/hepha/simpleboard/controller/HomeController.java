@@ -59,7 +59,7 @@ public class HomeController {
         logger.debug("Standard :: Article List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         ModelAndView model = new ModelAndView();
-        List<Post> result = articleService.getArticleList();
+        //List<Post> result = articleService.getArticleList();
 
 
 
@@ -109,14 +109,14 @@ public class HomeController {
 
 
         //Article 리스트 가져오기
-        List<Post> article_list = articleRepository.findAll();
+        // List<Post> article_list = articleRepository.findAll();
 
-        logger.debug("article_list.size: " + article_list.size());
+        // logger.debug("article_list.size: " + article_list.size());
 
-        //for(int i=0; i < article_list.size(); i++)
-        for(Post item : article_list){
-            logger.debug("ID : " + item.toString());
-        }
+        // //for(int i=0; i < article_list.size(); i++)
+        // for(Post item : article_list){
+        //     logger.debug("ID : " + item.toString());
+        // }
 
         return model;
     }

@@ -8,10 +8,13 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    {/* <App/> */}
-    {<Root/>}
-  </React.StrictMode>
+
+  //[M.RMK]StrictMode 때문에 2번 랜더링이 발생함
+  // <React.StrictMode>
+  //   {/* <App/> */}
+  //   {<Root/>}
+  // </React.StrictMode>
+  <Root/>
 );
 
 // If you want to start measuring performance in your app, pass a function

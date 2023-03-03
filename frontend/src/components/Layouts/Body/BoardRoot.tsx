@@ -40,6 +40,9 @@ function BoardRoot(){
     const [boards, setBoards] = React.useState<IBoards>();
 
     const loadBoards = async ()=>{
+
+        console.log("loadBoards");
+
         const allBoards = await getAllBoardList().then((data)=>{
             return data;
         })

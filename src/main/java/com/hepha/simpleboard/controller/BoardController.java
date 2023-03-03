@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,12 +71,14 @@ public class BoardController {
     }
 
     //2023.02.26 getPostsByBoardId 구현하기
-    @GetMapping("/getPostsByBoardIdBoard")
-    public List<Post> getPostsByBoardIdBoard(@RequestParam String boardId){
-        logger.debug("Standard :: Article List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2222");
+    @GetMapping("/getPostsByBoardId/{id}")
+    //public List<Post> getPostsByBoardIdBoard(@RequestParam String boardId){
+    public List<Post> getPostsByBoardIdBoard(@PathVariable("id") String id, @RequestParam Integer limit, @RequestParam Integer pagenum){
+        
+        logger.debug("Standard :: Post List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2222");
 
         // ModelAndView model = new ModelAndView();
-         List<Post> result = postService.getArticleList();
+         List<Post> result = postService.getPostsByBoardId(id, limit, pagenum);
 
 
         //List<Article> result = articleRepository.findAll();

@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 public class BoardService {
     
+    @Autowired
     private final BoardRepository boardRepository;
 
     //@Autowired
@@ -22,9 +23,8 @@ public class BoardService {
     }
 
 
-    @Autowired
+    //@Autowired
     public List<Board> getBoardList(){
-        
         return this.boardRepository.findAll();
     }
 

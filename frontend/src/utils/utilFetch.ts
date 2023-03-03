@@ -1,17 +1,30 @@
 import { sleep } from './utilExtra'
 
-export async function doFetchJSON(url:string, mark:string){
+export async function doFetchJSON(url:string, params: URLSearchParams, mark:string){
     // console.log("doFetchJSON....");
     // const result = await sleep(2000, 'doFetchJson', true);
     // console.log(`sleep result ${result}`);
     const errMessage = `[Error]doFetchJSON :: ${mark} :: ${url}`;
 
-    let fetchedReulst = fetch(url)
+    //console.log(url);
+    const fetchUrl = `${origin}/${url}`;
+
+    let fetchedReulst = fetch(fetchUrl)
     .then((response)=>{
+
+        console.log(response);
+        // console.log(response.status);
+        // console.log(response.ok);
+
         if(response.ok){
             return response.json(); //서버와 통신시 이상없이 데이터를 가져오면 JSON DATA를 다음 .then 에서 읽을수 있도록 json() promise 객체를 넘겨준다. 
         } else {
-            throw new Error(errMessage)
+            if(response.status == 404){
+                //[M.RMK]Custom Exception 처리방법, 리턴 받는 쪽도 규약이 필요할것
+                throw new Error(`[404 Error]${response.url}`)
+            } else {
+                throw new Error(errMessage)
+            }
         }
     })
     .then((json)=>{

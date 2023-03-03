@@ -75,8 +75,13 @@ export async function getAllBoardList(): Promise<IBoards>{
     return [...boards];
 }
 
-export async function getPostsByBoardId(): Promise<IPosts> {
-    const posts = await doFetchJSON("board/getPostsByBaordId", "getPostByBoardId");
+export async function getPostsByBoardId(id:string|undefined, limit:string|null, pagenum:string|null): Promise<IPosts> {
+
+    let params = new URLSearchParams({
+        limit: limit, 
+        pagenum: pagenum,
+    });
+    const posts = await doFetchJSON(`board/getPostsByBoardId/${id}`, "getPostByBoardId");
     return [...posts]
 }
 
