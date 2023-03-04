@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.hepha.simpleboard.model.BoardPost;
 import com.hepha.simpleboard.model.Post;
 import com.hepha.simpleboard.repository.PostSql;
 
@@ -42,18 +43,19 @@ public class PostJdbcRepository implements PostRepository {
 
 
     @Override
-    public List<Post> findAll() {
-        return namedParameterJdbcTemplate.query(PostSql.SELECT, EmptySqlParameterSource.INSTANCE, (rs, rowNum) -> new Post(
+    public List<BoardPost> findAll() {
+        return namedParameterJdbcTemplate.query(PostSql.SELECT, EmptySqlParameterSource.INSTANCE, (rs, rowNum) -> new BoardPost(
             rs.getString("id"), 
             rs.getString("title"), 
             rs.getString("content"), 
             rs.getString("post_type"), 
             rs.getString("delt_flg"),
-            rs.getString("primary_flg"),
             rs.getString("cre_id"), 
             rs.getDate("cre_dt"), 
             rs.getString("upd_id"), 
-            rs.getDate("upd_dt")
+            rs.getDate("upd_dt"),
+            rs.getString("primary_flg"),
+            rs.getInt("total")
         ));
     }
 
@@ -72,32 +74,35 @@ public class PostJdbcRepository implements PostRepository {
 
 
     @Override
-    public List<Post> getPostByBoardId(String id, Integer limit, Integer pagenum){
-        String query = "SELECT P.ID, P.TITLE, P.CONTENT, P.POST_TYPE, P.DELT_FLG, P.CRE_ID, P.CRE_DT, P.UPD_ID, P.UPD_DT, R.PRIMARY_FLG " 
+    public List<BoardPost> getPostByBoardId(String id, Integer limit, Integer pagenum){
+
+        String query = "WITH BOARD_TOTAL AS (SELECT COUNT(P.ID) AS TOTAL " 
+        + "FROM POST P, POST_REF_BOARD R "
+        + "WHERE P.ID = R.POST_ID "
+        + "AND R.BOARD_ID = %s ) "
+        + "SELECT P.ID, P.TITLE, P.CONTENT, P.POST_TYPE, P.DELT_FLG, P.CRE_ID, P.CRE_DT, P.UPD_ID, P.UPD_DT, R.PRIMARY_FLG, (SELECT TOTAL FROM BOARD_TOTAL) AS TOTAL " 
         + "FROM POST P, POST_REF_BOARD R WHERE P.ID = R.ID AND R.BOARD_ID = %s "
         + "LIMIT %s "
         + "OFFSET %s ";
 
-        String query2 = String.format(query, id, limit, limit * (pagenum - 1));
-
-        logger.debug(query2);
+        query = String.format(query, id, id, limit, limit * (pagenum - 1));
+        //logger.debug(query);
 
         try{
-
-            SqlParameterSource namedParams = new MapSqlParameterSource()
-            .addValue("boardId", id);
-
-            return namedParameterJdbcTemplate.query(query2, EmptySqlParameterSource.INSTANCE, (rs, rowNum) -> new Post(
+            // SqlParameterSource namedParams = new MapSqlParameterSource()
+            // .addValue("boardId", id);
+            return namedParameterJdbcTemplate.query(query, EmptySqlParameterSource.INSTANCE, (rs, rowNum) -> new BoardPost(
                 rs.getString("id"), 
                 rs.getString("title"), 
                 rs.getString("content"), 
                 rs.getString("post_type"), 
                 rs.getString("delt_flg"),
-                rs.getString("primary_flg"),
                 rs.getString("cre_id"), 
                 rs.getDate("cre_dt"), 
                 rs.getString("upd_id"), 
-                rs.getDate("upd_dt")
+                rs.getDate("upd_dt"),
+                rs.getString("primary_flg"),
+                rs.getInt("total")
             ));
 
         } catch(DataAccessException ex){

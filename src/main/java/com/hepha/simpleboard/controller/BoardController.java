@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hepha.simpleboard.model.Post;
+import com.hepha.simpleboard.model.BoardPost;
 import com.hepha.simpleboard.model.Board;
 import com.hepha.simpleboard.repository.PostRepository;
 import com.hepha.simpleboard.service.PostService;
@@ -73,20 +74,21 @@ public class BoardController {
     //2023.02.26 getPostsByBoardId 구현하기
     @GetMapping("/getPostsByBoardId/{id}")
     //public List<Post> getPostsByBoardIdBoard(@RequestParam String boardId){
-    public List<Post> getPostsByBoardIdBoard(@PathVariable("id") String id, @RequestParam Integer limit, @RequestParam Integer pagenum){
+    public List<BoardPost> getPostsByBoardIdBoard(@PathVariable("id") String id, @RequestParam Integer limit, @RequestParam Integer pagenum){
         
         logger.debug("Standard :: Post List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2222");
 
         // ModelAndView model = new ModelAndView();
-         List<Post> result = postService.getPostsByBoardId(id, limit, pagenum);
+        List<BoardPost> result = postService.getPostsByBoardId(id, limit, pagenum);
+        
+        result.forEach(post -> {
+            logger.debug(post.getId());
+            logger.debug(post.getContent());
+        });
 
+        //logger.debug(id);
 
         //List<Article> result = articleRepository.findAll();
-
-
-
-
-
         return result;      
     }
 

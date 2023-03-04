@@ -99,7 +99,7 @@ function SideBoardNavItem(props:IPros){
 
   const clickNavItem = (event: React.MouseEvent<HTMLAnchorElement>) => {
     //event.preventDefault();
-    console.log("clickNavItem");
+    //console.log("clickNavItem");
   }
 
 

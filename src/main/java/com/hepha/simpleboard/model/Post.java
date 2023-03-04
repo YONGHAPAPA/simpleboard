@@ -5,7 +5,6 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -18,10 +17,9 @@ import lombok.ToString;
 public class Post {
     private String id;
     private String title;
-    private String content;
+    protected String content;
     private String post_type;
     private String delt_flg;
-    private String primary_flg;
     private String cre_id;
     private Date cre_dt;
     private String upd_id;

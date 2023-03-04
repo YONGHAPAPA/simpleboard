@@ -46,7 +46,7 @@ class Root extends React.Component {
                     <Route index element={ <DashBoard />} /> 
                     <Route path="/board" element={ <BoardRoot />}>
                         <Route index element={ <BoardAnnouncement />}/>
-                        <Route path=":id" element={ <BoardPostList />}/>
+                        <Route path=":boardId" element={ <BoardPostList />}/>
                     </Route>
                     <Route path="/about" element={ <AboutMain/> } />
                 </Route>

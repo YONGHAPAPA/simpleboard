@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hepha.simpleboard.model.Post;
+import com.hepha.simpleboard.model.BoardPost;
 import com.hepha.simpleboard.repository.PostRepository;
 import lombok.extern.log4j.Log4j;
 
@@ -23,7 +24,7 @@ public class PostService {
 
 
     //@Autowired
-    public List<Post> getPostsByBoardId(String boardId, Integer limit, Integer pagenum){
+    public List<BoardPost> getPostsByBoardId(String boardId, Integer limit, Integer pagenum){
         return this.postRepository.getPostByBoardId(boardId, limit, pagenum);
     }
 

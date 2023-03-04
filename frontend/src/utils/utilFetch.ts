@@ -7,7 +7,7 @@ export async function doFetchJSON(url:string, params: URLSearchParams, mark:stri
     const errMessage = `[Error]doFetchJSON :: ${mark} :: ${url}`;
 
     //console.log(url);
-    const fetchUrl = `${origin}/${url}`;
+    const fetchUrl = `${origin}/${url}?` + params;
 
     let fetchedReulst = fetch(fetchUrl)
     .then((response)=>{
