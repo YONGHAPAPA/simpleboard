@@ -42,11 +42,16 @@ function BoardRoot(){
     const loadBoards = async ()=>{
         //console.log("loadBoards");
 
-        const allBoards = await getAllBoardList().then((data)=>{
-            return data;
-        })
+        try{
+            const allBoards = await getAllBoardList().then((data)=>{
+                return data;
+            });
 
-        setBoards(allBoards);
+            setBoards(allBoards);
+            
+        } catch(err){
+            alert(err);
+        }
     }
 
     React.useEffect(()=>{
